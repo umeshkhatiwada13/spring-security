@@ -38,7 +38,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
     // Method to retrieve user from database
     protected UserDetailsService userDetailsService() {
         UserDetails ram = User.builder().username("ram").password("ram123").roles("STUDENT").build();
-        System.out.println("Hello world");
+        System.out.println("Hello world1");
         return new InMemoryUserDetailsManager(ram);
     }
 }
