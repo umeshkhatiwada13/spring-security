@@ -1,9 +1,14 @@
 package com.security.demo.security;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 /**
@@ -20,11 +25,19 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
         //Anu request must be authenticated (ie client must provide username and password)
         http.authorizeRequests()
                 //Permit all request for requrst to below given urls
-                .antMatchers("/", "index","/css/*","/js/*")
+                .antMatchers("/", "index", "/css/*", "/js/*")
                 .permitAll()
                 .anyRequest()
                 .authenticated()
                 //Authenticity of client is done using basic authentication
                 .and().httpBasic();
+    }
+
+    @Override
+    @Bean
+    // Method to retrieve user from database
+    protected UserDetailsService userDetailsService() {
+        UserDetails ram = User.builder().username("ram").password("ram123").roles("STUDENT").build();
+        return new InMemoryUserDetailsManager(ram);
     }
 }
