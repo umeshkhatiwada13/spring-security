@@ -1,5 +1,6 @@
 package com.security.demo.security;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -8,6 +9,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
@@ -19,6 +21,13 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @Configuration
 @EnableWebSecurity
 public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
+
+    private final PasswordEncoder passwordEncoder;
+
+    @Autowired
+    public ApplicationSecurityConfig(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -37,7 +46,10 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     // Method to retrieve user from database
     protected UserDetailsService userDetailsService() {
-        UserDetails ram = User.builder().username("ram").password("ram123").roles("STUDENT").build();
+        UserDetails ram = User.builder().username("ram").password(passwordEncoder.encode("ram123"))
+                .roles("STUDENT").build();
+        UserDetails hari = User.builder().username("hari").password(passwordEncoder.encode("hari123")).
+                roles("ADMIN").build();
         System.out.println("Hello world1");
         return new InMemoryUserDetailsManager(ram);
     }
