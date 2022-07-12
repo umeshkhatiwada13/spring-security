@@ -26,7 +26,6 @@ public class StudentController {
     @GetMapping("{id}")
     public Student getStudent(@PathVariable Integer id) {
         return STUDENT_LIST.stream().filter(student ->
-                id.equals(student.getId())).findFirst().orElseThrow(() -> new IllegalArgumentException("Student with Id " + id + " not found"))
-                ;
+                id.equals(student.getId())).findFirst().orElseThrow(() -> new IllegalArgumentException("Student with Id " + id + " not found"));
     }
 }

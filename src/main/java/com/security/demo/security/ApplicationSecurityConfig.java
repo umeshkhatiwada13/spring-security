@@ -34,8 +34,9 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
         //Anu request must be authenticated (ie client must provide username and password)
         http.authorizeRequests()
                 //Permit all request for requrst to below given urls
-                .antMatchers("/", "index", "/css/*", "/js/*")
-                .permitAll()
+                .antMatchers("/", "index", "/css/*", "/js/*").permitAll()
+                // Allow all apis starting with /api/ to be accessed by users with role student only
+                .antMatchers("/api/**").hasRole(ApplicationUserRole.STUDENT.name())
                 .anyRequest()
                 .authenticated()
                 //Authenticity of client is done using basic authentication
