@@ -9,7 +9,7 @@ import lombok.Getter;
  */
 @Getter
 public enum ApplicationUserPermission {
-    STUDENT("student:read"),
+    STUDENT_READ("student:read"),
     STUDENT_WRITE("student:write"),
     COURSE_READ("course:read"),
     COURSE_WRITE("course:write");

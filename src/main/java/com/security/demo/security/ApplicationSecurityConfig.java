@@ -46,11 +46,13 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     // Method to retrieve user from database
     protected UserDetailsService userDetailsService() {
-        UserDetails ram = User.builder().username("ram").password(passwordEncoder.encode("ram123"))
-                .roles("STUDENT").build();
-        UserDetails hari = User.builder().username("hari").password(passwordEncoder.encode("hari123")).
-                roles("ADMIN").build();
+        UserDetails ram = User.builder().username("ram")
+                .password(passwordEncoder.encode("ram123"))
+                .roles(ApplicationUserRole.STUDENT.name()).build();
+        UserDetails hari = User.builder().username("hari")
+                .password(passwordEncoder.encode("hari123")).
+                roles(ApplicationUserRole.ADMIN.name()).build();
         System.out.println("Hello world1");
-        return new InMemoryUserDetailsManager(ram);
+        return new InMemoryUserDetailsManager(ram, hari);
     }
 }
