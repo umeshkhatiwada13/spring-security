@@ -40,17 +40,19 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/", "index", "/css/*", "/js/*").permitAll()
                 // Allow all apis starting with /api/ to be accessed by users with role student only
                 .antMatchers("/api/**").hasAnyAuthority(ApplicationUserRole.STUDENT.name())
-               /* // Allow delete, post and put request to user with authority COURSE_WRITE in management/api/** apis
-                .antMatchers(HttpMethod.DELETE, "/management/api/**").hasAuthority(ApplicationUserPermission.COURSE_WRITE.getPermission())
-                .antMatchers(HttpMethod.POST, "/management/api/**").hasAuthority(ApplicationUserPermission.COURSE_WRITE.getPermission())
-                .antMatchers(HttpMethod.PUT, "/management/api/**").hasAuthority(ApplicationUserPermission.COURSE_WRITE.getPermission())
-                // Allow users with role to access management/api/** apis get methods with roles Admin and Admin_Trainee
-                .antMatchers(HttpMethod.GET, "/management/api/**")
-                .hasAnyRole(ApplicationUserRole.ADMIN.name(), ApplicationUserRole.ADMIN_TRAINEE.name())*/
+                /* // Allow delete, post and put request to user with authority COURSE_WRITE in management/api/** apis
+                 .antMatchers(HttpMethod.DELETE, "/management/api/**").hasAuthority(ApplicationUserPermission.COURSE_WRITE.getPermission())
+                 .antMatchers(HttpMethod.POST, "/management/api/**").hasAuthority(ApplicationUserPermission.COURSE_WRITE.getPermission())
+                 .antMatchers(HttpMethod.PUT, "/management/api/**").hasAuthority(ApplicationUserPermission.COURSE_WRITE.getPermission())
+                 // Allow users with role to access management/api/** apis get methods with roles Admin and Admin_Trainee
+                 .antMatchers(HttpMethod.GET, "/management/api/**")
+                 .hasAnyRole(ApplicationUserRole.ADMIN.name(), ApplicationUserRole.ADMIN_TRAINEE.name())*/
                 .anyRequest()
                 .authenticated()
-                //Authenticity of client is done using basic authentication
-                .and().httpBasic();
+                //Authenticity of client is done using form based authentication
+                .and().formLogin()
+                .loginPage("/login").permitAll()
+                .defaultSuccessUrl("/courses", true);
     }
 
     @Override
