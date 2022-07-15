@@ -52,7 +52,12 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 //Authenticity of client is done using form based authentication
                 .and().formLogin()
                 .loginPage("/login").permitAll()
-                .defaultSuccessUrl("/courses", true);
+                .defaultSuccessUrl("/courses", true)
+                .and().logout().logoutUrl("/logout")
+                .clearAuthentication(true)
+                // In case Remember-me is implemented
+//                .deleteCookies("JSESSIONID", "remember-me")
+                .logoutSuccessUrl("/login");
     }
 
     @Override

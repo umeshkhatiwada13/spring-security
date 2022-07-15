@@ -3,6 +3,7 @@ package com.security.demo.security;
 import com.google.common.collect.Sets;
 import lombok.Getter;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import static com.security.demo.security.ApplicationUserPermission.*;
 
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -15,13 +16,9 @@ import java.util.stream.Collectors;
 
 @Getter
 public enum ApplicationUserRole {
-    ADMIN(Sets.newHashSet(ApplicationUserPermission.COURSE_READ,
-            ApplicationUserPermission.COURSE_WRITE,
-            ApplicationUserPermission.STUDENT_WRITE,
-            ApplicationUserPermission.STUDENT_READ)),
+    ADMIN(Sets.newHashSet(COURSE_READ, COURSE_WRITE, STUDENT_WRITE, STUDENT_READ)),
 
-    ADMIN_TRAINEE(Sets.newHashSet(ApplicationUserPermission.COURSE_READ,
-            ApplicationUserPermission.STUDENT_READ)),
+    ADMIN_TRAINEE(Sets.newHashSet(COURSE_READ, STUDENT_READ)),
     STUDENT(Sets.newHashSet());
 
     private final Set<ApplicationUserPermission> permissions;
